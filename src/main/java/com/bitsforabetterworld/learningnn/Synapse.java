@@ -6,7 +6,7 @@ public class Synapse {
 
     public Synapse(Neuron neuron) {
         this.neuron = neuron;
-        this.weight = Maths.random();
+        this.weight = Maths.randomWeight();
     }
 
     public double getValue() {

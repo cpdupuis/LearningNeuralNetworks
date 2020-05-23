@@ -14,7 +14,6 @@ public class LTU implements Neuron {
         for (var input : inputs) {
             sum += input.getValue();
         }
-        // Use the standard logistic function to map the result to the range [0.0,1.0]
-        return Maths.sigmoid(sum);
+        return Maths.activationFunction(sum);
     }
 }
