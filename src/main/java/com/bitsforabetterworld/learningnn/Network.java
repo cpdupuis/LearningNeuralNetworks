@@ -28,7 +28,8 @@ public class Network {
         }
     }
 
-    public void train(List<Double> input, List<Double> expectedOutput) {
+    // returns chi-squared error
+    public double train(List<Double> input, List<Double> expectedOutput) {
         List<Double> result = evaluate(input);
         double totalError = 0.0;
         double chiSquaredError = 0.0;
@@ -40,9 +41,10 @@ public class Network {
             double error = expectedOutput.get(i) - result.get(i);
             totalError += error;
             chiSquaredError += (error * error);
-            outputLayer.getNeurons().get(i).updateWeights(error);
+            outputLayer.getNeurons().get(i).updateWeights(-error);
         }
         System.out.println("Error report chi2="+chiSquaredError+" totalErr="+totalError);
+        return chiSquaredError;
     }
     
     public List<Double> evaluate(List<Double> input) {
