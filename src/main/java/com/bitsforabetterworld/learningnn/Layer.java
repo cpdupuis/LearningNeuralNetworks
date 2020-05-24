@@ -1,5 +1,7 @@
 package com.bitsforabetterworld.learningnn;
 
+import java.util.List;
+
 public interface Layer {
-    Iterable<Neuron> getNeurons();
+    List<? extends Neuron> getNeurons();
 }
