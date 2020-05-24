@@ -8,6 +8,11 @@ public class Maths {
     public static double activationFunction(double x) {
         return Math.tanh(x);
     }
+    
+    public static double derivativeActivationFunction(double x) {
+        double coshx = Math.cosh(x);
+        return 1 / (coshx * coshx);
+    }
 
     // Logistic function. Returns a value in the range (0, 1)
     public static double sigmoid(double x) {

@@ -6,5 +6,15 @@ public class BiasNeuron implements Neuron {
     public double getOutputValue() {
         return 1.0;
     }
+
+    @Override
+    public void reset() {
+
+    }
+
+    @Override
+    public void updateWeights(double correctionFactor) {
+
+    }
     
 }
