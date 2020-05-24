@@ -14,11 +14,11 @@ public class Network {
         allNeurons = new ArrayList<>(inputLayer.getNeurons());
         Layer prev = this.inputLayer;
         for (int i=0; i<innerSize; ++i) {
-            InnerLayer curr = new InnerLayer(learningRate, innerSize, prev);
+            InnerLayer curr = new InnerLayer(learningRate, innerSize, prev, true);
             allNeurons.addAll(curr.getNeurons());
             prev = curr;
         }
-        this.outputLayer = new InnerLayer(learningRate, outputSize, prev);
+        this.outputLayer = new InnerLayer(learningRate, outputSize, prev, false);
         allNeurons.addAll(outputLayer.getNeurons());
     }
 
@@ -28,7 +28,7 @@ public class Network {
         }
     }
 
-    public void learn(List<Double> input, List<Double> expectedOutput) {
+    public void train(List<Double> input, List<Double> expectedOutput) {
         List<Double> result = evaluate(input);
         double totalError = 0.0;
         double chiSquaredError = 0.0;

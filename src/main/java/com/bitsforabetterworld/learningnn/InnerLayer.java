@@ -6,10 +6,11 @@ import java.util.List;
 public class InnerLayer implements Layer {
     private final List<Neuron> neurons;
 
-    public InnerLayer(double learningRate, int neuronCount, Layer previous) {
-        // Create 1 additional neuron as a bias element
-        this.neurons = new ArrayList<>(neuronCount + 1);
-        neurons.add(new BiasNeuron());
+    public InnerLayer(double learningRate, int neuronCount, Layer previous, boolean withBias) {
+        this.neurons = new ArrayList<>(neuronCount);
+        if (withBias) {
+            neurons.add(new BiasNeuron());
+        }
         for (int i=0; i<neuronCount; ++i) {
             
             List<Synapse> synapses = new ArrayList<>();
