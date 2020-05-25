@@ -5,62 +5,46 @@ import java.io.IOException;
 import com.fasterxml.jackson.core.JsonGenerator;
 
 // Linear Threshold Unit. See this page https://medium.com/@srajaninnov/introduction-to-neural-networks-11b009f1a97b
-public class InnerNeuron implements Neuron {
+public class InnerNeuron extends Neuron {
     private final Iterable<Synapse> synapses;
-    private double currentOutput = Double.NaN;
-    private final long id;
 
     public InnerNeuron(Iterable<Synapse> synapses, long id) {
+        super(id);
         this.synapses = synapses;
-        this.id = id;
     }
 
     @Override
     public double getOutputValue() {
-        if (Double.isNaN(currentOutput)) {
+        if (Double.isNaN(value)) {
             double sum = 0.0;
             for (var synapse : synapses) {
                 sum += synapse.getWeightedValue();
             }
-            currentOutput = Maths.activationFunction(sum);
+            value = Maths.activationFunction(sum);
         }
-        return currentOutput;
+        return value;
     }
 
     @Override
     public void updateNeuronWeight(double expected) {
-        double error = expected - currentOutput;
+        double error = expected - value;
         // Maybe?
 
         double deltaOutput = error * Maths.derivativeActivationFunction(error);
-        System.out.println("InnerNeuron updating weights: error="+error + " current="+currentOutput+ " expected: "+expected + " delta="+deltaOutput);
+        System.out.println("InnerNeuron updating weights: error="+error + " current="+value+ " expected: "+expected + " delta="+deltaOutput);
         for (var synapse : synapses) {
             synapse.updateWeights(deltaOutput);
         }
     }
 
     @Override
-    public void reset() {
-        currentOutput = Double.NaN;
-    }
-
-    @Override
-    public void toJson(JsonGenerator gen) throws IOException {
-        gen.writeStartObject();
-        gen.writeStringField("type", this.getClass().getSimpleName());
-        gen.writeNumberField("id", id);
-        gen.writeNumberField("currentOutput", currentOutput);
+    public void serializeSynapses(JsonGenerator gen) throws IOException {
         gen.writeFieldName("synapses");
         gen.writeStartArray();
         for (var synapse : synapses) {
             synapse.toJson(gen);
         }
         gen.writeEndArray();
-        gen.writeEndObject();
     }
 
-    @Override
-    public long getId() {
-        return id;
-    }
 }

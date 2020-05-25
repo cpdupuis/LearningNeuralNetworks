@@ -4,12 +4,11 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 
-public class BiasNeuron implements Neuron {
-    private final long id;
+public class BiasNeuron extends Neuron {
     private static final double biasValue = 1.0;
 
     public BiasNeuron(long id) {
-        this.id = id;
+        super(id);
     }
 
     @Override
@@ -18,27 +17,12 @@ public class BiasNeuron implements Neuron {
     }
 
     @Override
-    public void reset() {
-
-    }
-
-    @Override
     public void updateNeuronWeight(double correctionFactor) {
-
+        // no-op
     }
 
     @Override
-    public void toJson(JsonGenerator gen) throws IOException {
-        gen.writeStartObject();
-        gen.writeStringField("type", this.getClass().getSimpleName());
-        gen.writeNumberField("id", id);
-        gen.writeNumberField("value", biasValue);
-        gen.writeEndObject();
-    }
-
-    @Override
-    public long getId() {
-        return id;
-    }
-    
+    public void serializeSynapses(JsonGenerator gen) throws IOException {
+        // no-op
+    }    
 }
