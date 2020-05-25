@@ -5,12 +5,12 @@ import java.io.IOException;
 import com.fasterxml.jackson.core.JsonGenerator;
 
 // Linear Threshold Unit. See this page https://medium.com/@srajaninnov/introduction-to-neural-networks-11b009f1a97b
-public class LTU implements Neuron {
+public class InnerNeuron implements Neuron {
     private final Iterable<Synapse> synapses;
     private double currentOutput = Double.NaN;
     private final long id;
 
-    public LTU(Iterable<Synapse> synapses, long id) {
+    public InnerNeuron(Iterable<Synapse> synapses, long id) {
         this.synapses = synapses;
         this.id = id;
     }
@@ -33,7 +33,7 @@ public class LTU implements Neuron {
         // Maybe?
 
         double deltaOutput = error * Maths.derivativeActivationFunction(error);
-        System.out.println("LTU updating weights: error="+error + " current="+currentOutput+ " expected: "+expected + " delta="+deltaOutput);
+        System.out.println("InnerNeuron updating weights: error="+error + " current="+currentOutput+ " expected: "+expected + " delta="+deltaOutput);
         for (var synapse : synapses) {
             synapse.updateWeights(deltaOutput);
         }

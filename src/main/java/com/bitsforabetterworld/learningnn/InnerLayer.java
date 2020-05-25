@@ -21,8 +21,8 @@ public class InnerLayer implements Layer {
             for (var neuron : previous.getNeurons()) {
                 synapses.add(new Synapse(network.getLearningRate(), neuron));
             }
-            LTU ltu = new LTU(synapses, network.createId());
-            neurons.add(ltu);
+            InnerNeuron innerNeuron = new InnerNeuron(synapses, network.createId());
+            neurons.add(innerNeuron);
         }
     }
 
