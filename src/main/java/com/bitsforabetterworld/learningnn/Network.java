@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 
 public class Network {
     private final InputLayer inputLayer;
-    private final Layer outputLayer;
+    private final OutputLayer outputLayer;
     private final ArrayList<Neuron> allNeurons;
     private final List<Layer> allLayers;
     private static final JsonFactory jsonFactory = new JsonFactory();
@@ -71,12 +71,12 @@ public class Network {
         allNeurons = new ArrayList<>(inputLayer.getNeurons());
         Layer prev = this.inputLayer;
         for (int i = 0; i < innerLayerCount; ++i) {
-            InnerLayer curr = new InnerLayer(this, prev, true);
+            InnerLayer curr = new InnerLayer(this, prev);
             allLayers.add(curr);
             allNeurons.addAll(curr.getNeurons());
             prev = curr;
         }
-        this.outputLayer = new InnerLayer(this, prev, false);
+        this.outputLayer = new OutputLayer(this, prev);
         allLayers.add(outputLayer);
         allNeurons.addAll(outputLayer.getNeurons());
     }

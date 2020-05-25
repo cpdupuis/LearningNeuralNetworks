@@ -3,13 +3,12 @@ package com.bitsforabetterworld.learningnn;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InnerLayer extends Layer {
+public class OutputLayer extends Layer {
     private final List<Neuron> neurons;
 
-    public InnerLayer(Network network, Layer previous) {
-        int neuronCount = network.getInnerLayerSize();
-        this.neurons = new ArrayList<>(neuronCount + 1); // add 1 for the bias neuron
-        neurons.add(new BiasNeuron(network.createId()));
+    public OutputLayer(Network network, Layer previous) {
+        int neuronCount =  network.getOutputLayerSize();
+        this.neurons = new ArrayList<>(neuronCount);
         for (int i = 0; i < neuronCount; ++i) {
             List<Synapse> synapses = new ArrayList<>();
             for (var neuron : previous.getNeurons()) {
@@ -24,5 +23,4 @@ public class InnerLayer extends Layer {
     public List<Neuron> getNeurons() {
         return neurons;
     }
-
 }
