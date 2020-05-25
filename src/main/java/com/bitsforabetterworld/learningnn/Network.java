@@ -99,6 +99,7 @@ public class Network {
             // error is the amount that the result needs to be corrected by in order to be
             // correct
             double error = expectedOutput.get(i) - result.get(i);
+            System.out.println("Expected: "+expectedOutput.get(i)+ " Actual: "+result.get(i) + " Error: "+error);;
             totalError += error;
             chiSquaredError += (error * error);
             outputLayer.getNeurons().get(i).updateWeights(-error);

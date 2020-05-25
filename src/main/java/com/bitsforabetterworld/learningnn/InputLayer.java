@@ -36,7 +36,14 @@ public class InputLayer implements Layer {
 
     @Override
     public void toJson(JsonGenerator gen) throws IOException {
-        // TODO Auto-generated method stub
-
+        gen.writeStartObject();
+        gen.writeStringField("type", this.getClass().getSimpleName());
+        gen.writeFieldName("neurons");
+        gen.writeStartArray();
+        for (var neuron : neurons) {
+            neuron.toJson(gen);
+        }
+        gen.writeEndArray();
+        gen.writeEndObject();
     }
 }

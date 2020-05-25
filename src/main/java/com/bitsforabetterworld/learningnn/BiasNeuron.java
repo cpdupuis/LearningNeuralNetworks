@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 
 public class BiasNeuron implements Neuron {
     private final long id;
+    private static final double biasValue = 1.0;
 
     public BiasNeuron(long id) {
         this.id = id;
@@ -13,7 +14,7 @@ public class BiasNeuron implements Neuron {
 
     @Override
     public double getOutputValue() {
-        return 1.0;
+        return biasValue;
     }
 
     @Override
@@ -31,6 +32,7 @@ public class BiasNeuron implements Neuron {
         gen.writeStartObject();
         gen.writeStringField("type", this.getClass().getSimpleName());
         gen.writeNumberField("id", id);
+        gen.writeNumberField("value", biasValue);
         gen.writeEndObject();
     }
 

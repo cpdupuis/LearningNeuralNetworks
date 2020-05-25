@@ -4,35 +4,44 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 public class NetworkTest {
     @Test
-    public void testRandoms() {
-
-    }    
+    public void testLearnZero() throws IOException {
+        Network network = new Network.Builder().innerLayerCount(0).inputLayerSize(1).outputLayerSize(1)
+                .learningRate(0.1).build();
+        System.out.println("0: "+network.toJson());
+        network.train(Arrays.asList(0.0), Arrays.asList(0.0));
+        System.out.println("1: "+network.toJson());
+        network.train(Arrays.asList(1.0), Arrays.asList(0.0));
+        System.out.println("2: "+network.toJson());
+        network.train(Arrays.asList(2.0), Arrays.asList(0.0));
+        System.out.println("3: "+network.toJson());
+        network.train(Arrays.asList(3.0), Arrays.asList(0.0));
+        System.out.println("4: "+network.toJson());
+        List<Double> result = network.evaluate(Arrays.asList(1.5));
+        assertEquals(0.0, result.get(0), 0.0001);
+    }
 
     public void testXor() {
-        var network = new Network.Builder()
-        .learningRate(0.2)
-        .inputLayerSize(2)
-        .innerLayerSize(3)
-        .outputLayerSize(1)
-        .innerLayerCount(2)
-        .build();
+        var network = new Network.Builder().learningRate(0.2).inputLayerSize(2).innerLayerSize(3).outputLayerSize(1)
+                .innerLayerCount(2).build();
         int count = 0;
         int maxCount = 1;
-        for (double sumOfSquareError = Double.MAX_VALUE; count < maxCount && sumOfSquareError > 0.1;++count) {
+        for (double sumOfSquareError = Double.MAX_VALUE; count < maxCount && sumOfSquareError > 0.1; ++count) {
             sumOfSquareError = 0.0;
             double err = network.train(Arrays.asList(0.0, 0.0), Arrays.asList(0.0));
             sumOfSquareError += (err * err);
             err = network.train(Arrays.asList(0.0, 1.0), Arrays.asList(1.0));
             sumOfSquareError += (err * err);
-            err =  network.train(Arrays.asList(1.0, 0.0), Arrays.asList(1.0));
+            err = network.train(Arrays.asList(1.0, 0.0), Arrays.asList(1.0));
             sumOfSquareError += (err * err);
-            err =  network.train(Arrays.asList(1.0, 1.0), Arrays.asList(0.0));
+            err = network.train(Arrays.asList(1.0, 1.0), Arrays.asList(0.0));
             sumOfSquareError += (err * err);
-            System.out.println("Iteration["+count+"] = "+sumOfSquareError);
+            System.out.println("Iteration[" + count + "] = " + sumOfSquareError);
         }
         var result00 = network.evaluate(Arrays.asList(0.0, 0.0));
         var result01 = network.evaluate(Arrays.asList(0.0, 1.0));
