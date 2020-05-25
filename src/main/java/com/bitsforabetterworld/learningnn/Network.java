@@ -113,7 +113,7 @@ public class Network {
         inputLayer.setInput(input);
         List<Double> result = new ArrayList<>(outputLayer.getNeurons().size());
         for (var neuron : outputLayer.getNeurons()) {
-            result.add(neuron.getOutputValue());
+            result.add(neuron.getValue());
         }
         return result;
     }

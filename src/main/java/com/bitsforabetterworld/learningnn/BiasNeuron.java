@@ -5,15 +5,14 @@ import java.io.IOException;
 import com.fasterxml.jackson.core.JsonGenerator;
 
 public class BiasNeuron extends Neuron {
-    private static final double biasValue = 1.0;
 
     public BiasNeuron(long id) {
         super(id);
     }
 
     @Override
-    public double getOutputValue() {
-        return biasValue;
+    public double getValue() {
+        return 1.0;
     }
 
     @Override

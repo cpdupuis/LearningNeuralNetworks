@@ -13,7 +13,6 @@ public abstract class Neuron {
         this.value = Double.NaN;
     }
 
-    public abstract double getOutputValue();
     public abstract void updateNeuronWeight(double correctionFactor);
     protected abstract void serializeSynapses(JsonGenerator gen) throws IOException;
 

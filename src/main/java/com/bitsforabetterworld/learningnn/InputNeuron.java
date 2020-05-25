@@ -23,9 +23,4 @@ public class InputNeuron extends Neuron {
     public void serializeSynapses(JsonGenerator gen) throws IOException {
         // no-op
     }
-
-    @Override
-    public double getOutputValue() {
-        return value;
-    }
 }

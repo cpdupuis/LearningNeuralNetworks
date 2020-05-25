@@ -14,7 +14,7 @@ public class InnerNeuron extends Neuron {
     }
 
     @Override
-    public double getOutputValue() {
+    public double getValue() {
         if (Double.isNaN(value)) {
             double sum = 0.0;
             for (var synapse : synapses) {

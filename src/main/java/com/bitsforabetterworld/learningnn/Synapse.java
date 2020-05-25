@@ -16,7 +16,7 @@ public class Synapse {
     }
 
     public double getWeightedValue() {
-        return weight * neuron.getOutputValue();
+        return weight * neuron.getValue();
     }
 
     public double getWeight() {
@@ -24,12 +24,11 @@ public class Synapse {
     }
 
     public void updateWeights(double error) {
-        // Update my weight according to currentWeight * error
-        double correctionFactor = weight * error;
-        System.out.println("Synapse updating weight orig="+weight + " correctionFactor="+correctionFactor + " error="+error);
-        this.weight += correctionFactor * learningRate;
+        double currentWeight = weight;
+        double correctionFactor = learningRate * error;
+        this.weight += correctionFactor;
         // Pass on currentWeight * error as the errror to my neuron.
-        neuron.updateNeuronWeight(correctionFactor);
+        neuron.updateNeuronWeight(currentWeight * error);
     }
 
     public void toJson(JsonGenerator gen) throws IOException {
