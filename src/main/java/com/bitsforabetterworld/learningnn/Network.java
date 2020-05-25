@@ -102,7 +102,7 @@ public class Network {
             System.out.println("Expected: "+expectedOutput.get(i)+ " Actual: "+result.get(i) + " Error: "+error);;
             totalError += error;
             chiSquaredError += (error * error);
-            outputLayer.getNeurons().get(i).updateWeights(-error);
+            outputLayer.getNeurons().get(i).updateNeuronWeight(expectedOutput.get(i));
         }
         System.out.println("Error report chi2=" + chiSquaredError + " totalErr=" + totalError);
         return chiSquaredError;

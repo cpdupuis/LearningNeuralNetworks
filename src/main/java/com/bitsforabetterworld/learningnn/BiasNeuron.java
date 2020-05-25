@@ -23,7 +23,7 @@ public class BiasNeuron implements Neuron {
     }
 
     @Override
-    public void updateWeights(double correctionFactor) {
+    public void updateNeuronWeight(double correctionFactor) {
 
     }
 

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 
 public interface Neuron {
     double getOutputValue();
-    void updateWeights(double correctionFactor);
+    void updateNeuronWeight(double correctionFactor);
     void reset();
     void toJson(JsonGenerator gen) throws IOException;
     long getId();

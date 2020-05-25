@@ -28,7 +28,7 @@ public class InputNeuron implements Neuron {
     }
 
     @Override
-    public void updateWeights(double correctionFactor) {
+    public void updateNeuronWeight(double correctionFactor) {
         // no-op
     }
 

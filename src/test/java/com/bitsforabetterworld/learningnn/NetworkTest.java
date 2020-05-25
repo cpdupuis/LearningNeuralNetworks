@@ -12,18 +12,14 @@ public class NetworkTest {
     @Test
     public void testLearnZero() throws IOException {
         Network network = new Network.Builder().innerLayerCount(0).inputLayerSize(1).outputLayerSize(1)
-                .learningRate(0.1).build();
-        System.out.println("0: "+network.toJson());
-        network.train(Arrays.asList(0.0), Arrays.asList(0.0));
-        System.out.println("1: "+network.toJson());
-        network.train(Arrays.asList(1.0), Arrays.asList(0.0));
-        System.out.println("2: "+network.toJson());
-        network.train(Arrays.asList(2.0), Arrays.asList(0.0));
-        System.out.println("3: "+network.toJson());
-        network.train(Arrays.asList(3.0), Arrays.asList(0.0));
-        System.out.println("4: "+network.toJson());
+                .learningRate(0.2).build();
+        for (double d=-1000.0; d<1000.0; ++d) {
+            network.train(Arrays.asList(d), Arrays.asList(0.0));
+        }
+        network.reset();
+        System.out.println("READY: "+network.toJson());
         List<Double> result = network.evaluate(Arrays.asList(1.5));
-        assertEquals(0.0, result.get(0), 0.0001);
+        assertEquals(0.0, result.get(0), 0.01);
     }
 
     public void testXor() {

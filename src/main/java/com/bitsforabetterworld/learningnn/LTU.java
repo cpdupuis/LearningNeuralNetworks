@@ -28,10 +28,12 @@ public class LTU implements Neuron {
     }
 
     @Override
-    public void updateWeights(double expected) {
+    public void updateNeuronWeight(double expected) {
         double error = expected - currentOutput;
         // Maybe?
+
         double deltaOutput = error * Maths.derivativeActivationFunction(error);
+        System.out.println("LTU updating weights: error="+error + " current="+currentOutput+ " expected: "+expected + " delta="+deltaOutput);
         for (var synapse : synapses) {
             synapse.updateWeights(deltaOutput);
         }
