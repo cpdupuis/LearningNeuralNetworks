@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NetworkTest {
-    @Test
     public void testLearnZero() throws IOException {
         Network network = new Network.Builder().innerLayerCount(0).inputLayerSize(1).outputLayerSize(1)
                 .learningRate(0.2).build();

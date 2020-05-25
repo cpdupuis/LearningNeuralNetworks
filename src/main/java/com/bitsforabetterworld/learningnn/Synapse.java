@@ -19,6 +19,10 @@ public class Synapse {
         return weight * neuron.getOutputValue();
     }
 
+    public double getWeight() {
+        return weight;
+    }
+
     public void updateWeights(double error) {
         // Update my weight according to currentWeight * error
         double correctionFactor = weight * error;
