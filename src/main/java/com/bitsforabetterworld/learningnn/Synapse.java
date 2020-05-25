@@ -12,7 +12,6 @@ public class Synapse {
     public Synapse(double learningRate, Neuron neuron) {
         this.neuron = neuron;
         this.learningRate = learningRate;
-        System.out.println("learningRate = "+learningRate);
         this.weight = Maths.randomWeight();
     }
 

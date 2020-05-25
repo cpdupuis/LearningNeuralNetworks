@@ -1,12 +1,9 @@
 package com.bitsforabetterworld.learningnn;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-
-public class InnerLayer implements Layer {
+public class InnerLayer extends Layer {
     private final List<Neuron> neurons;
 
     public InnerLayer(Network network, Layer previous, boolean withBias) {
@@ -31,16 +28,4 @@ public class InnerLayer implements Layer {
         return neurons;
     }
 
-    @Override
-    public void toJson(JsonGenerator gen) throws IOException {
-        gen.writeStartObject();
-        gen.writeStringField("type", this.getClass().getSimpleName());
-        gen.writeFieldName("neurons");
-        gen.writeStartArray();
-        for (var neuron : neurons) {
-            neuron.toJson(gen);
-        }
-        gen.writeEndArray();
-        gen.writeEndObject();
-    }
 }
