@@ -1,24 +1,83 @@
 package com.bitsforabetterworld.learningnn;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 
 public class Network {
     private final InputLayer inputLayer;
     private final Layer outputLayer;
     private final ArrayList<Neuron> allNeurons;
+    private final List<Layer> allLayers;
+    private static final JsonFactory jsonFactory = new JsonFactory();
+    private long ids = 0;
+    private final double learningRate;
+    private final int inputLayerSize;
+    private final int innerLayerSize;
+    private final int outputLayerSize;
+    private final int innerLayerCount;
 
+    public static class Builder {
+        private double learningRate = 0.0;
+        private int inputLayerSize = 0;
+        private int innerLayerSize = 0;
+        private int outputLayerSize = 0;
+        private int innerLayerCount = 0;
 
-    public Network(double learningRate, int inputSize, int innerSize, int outputSize, int innerLayers) {
-        this.inputLayer = new InputLayer(inputSize);
+        public Builder learningRate(double rate) {
+            this.learningRate = rate;
+            return this;
+        }
+
+        public Builder inputLayerSize(int count) {
+            this.inputLayerSize = count;
+            return this;
+        }
+
+        public Builder innerLayerSize(int count) {
+            this.innerLayerSize = count;
+            return this;
+        }
+
+        public Builder outputLayerSize(int count) {
+            this.outputLayerSize = count;
+            return this;
+        }
+
+        public Builder innerLayerCount(int count) {
+            this.innerLayerCount = count;
+            return this;
+        }
+
+        public Network build() {
+            return new Network(this);
+        }
+
+    }
+
+    private Network(Builder builder) {
+        this.learningRate = builder.learningRate;
+        this.inputLayerSize = builder.inputLayerSize;
+        this.innerLayerSize = builder.innerLayerSize;
+        this.outputLayerSize = builder.outputLayerSize;
+        this.innerLayerCount = builder.innerLayerCount;
+        this.allLayers = new ArrayList<>();
+        this.inputLayer = new InputLayer(this);
+        allLayers.add(inputLayer);
         allNeurons = new ArrayList<>(inputLayer.getNeurons());
         Layer prev = this.inputLayer;
-        for (int i=0; i<innerSize; ++i) {
-            InnerLayer curr = new InnerLayer(learningRate, innerSize, prev, true);
+        for (int i = 0; i < innerLayerCount; ++i) {
+            InnerLayer curr = new InnerLayer(this, prev, true);
+            allLayers.add(curr);
             allNeurons.addAll(curr.getNeurons());
             prev = curr;
         }
-        this.outputLayer = new InnerLayer(learningRate, outputSize, prev, false);
+        this.outputLayer = new InnerLayer(this, prev, false);
+        allLayers.add(outputLayer);
         allNeurons.addAll(outputLayer.getNeurons());
     }
 
@@ -36,17 +95,18 @@ public class Network {
         if (expectedOutput.size() != result.size()) {
             throw new ValidationException("Mismatch between expectedOutput size and output layer size");
         }
-        for (int i=0; i<result.size(); ++i) {
-            // error is the amount that the result needs to be corrected by in order to be correct
+        for (int i = 0; i < result.size(); ++i) {
+            // error is the amount that the result needs to be corrected by in order to be
+            // correct
             double error = expectedOutput.get(i) - result.get(i);
             totalError += error;
             chiSquaredError += (error * error);
             outputLayer.getNeurons().get(i).updateWeights(-error);
         }
-        System.out.println("Error report chi2="+chiSquaredError+" totalErr="+totalError);
+        System.out.println("Error report chi2=" + chiSquaredError + " totalErr=" + totalError);
         return chiSquaredError;
     }
-    
+
     public List<Double> evaluate(List<Double> input) {
         reset();
         inputLayer.setInput(input);
@@ -55,5 +115,44 @@ public class Network {
             result.add(neuron.getOutputValue());
         }
         return result;
+    }
+
+    public String toJson() throws IOException {
+        StringWriter sw = new StringWriter();
+        JsonGenerator gen = jsonFactory.createGenerator(sw);
+        gen.writeStartObject();
+        gen.writeFieldName("layers");
+        gen.writeStartArray();
+        for (var layer : allLayers) {
+            layer.toJson(gen);
+        }
+        gen.writeEndArray();
+        gen.writeEndObject();
+        gen.flush();
+        return sw.toString();
+    }
+
+    public long createId() {
+        return ids++;
+    }
+
+    public double getLearningRate() {
+        return learningRate;
+    }
+
+    public int getInputLayerSize() {
+        return inputLayerSize;
+    }
+
+    public int getInnerLayerSize() {
+        return innerLayerSize;
+    }
+
+    public int getOutputLayerSize() {
+        return outputLayerSize;
+    }
+
+    public int getInnerLayerCount() {
+        return innerLayerCount;
     }
 }

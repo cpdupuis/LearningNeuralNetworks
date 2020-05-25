@@ -1,12 +1,18 @@
 package com.bitsforabetterworld.learningnn;
 
+import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+
 public class InputNeuron implements Neuron {
     private double value;
+    private long id;
 
-    public InputNeuron() {
+    public InputNeuron(long id) {
         this.value = Double.NaN;
+        this.id = id;
     }
-    
+
     public void setValue(double value) {
         this.value = value;
     }
@@ -24,5 +30,19 @@ public class InputNeuron implements Neuron {
     @Override
     public void updateWeights(double correctionFactor) {
         // no-op
+    }
+
+    @Override
+    public void toJson(JsonGenerator gen) throws IOException {
+        gen.writeStartObject();
+        gen.writeStringField("type", this.getClass().getSimpleName());
+        gen.writeNumberField("id", id);
+        gen.writeNumberField("inputValue", value);
+        gen.writeEndObject();
+    }
+
+    @Override
+    public long getId() {
+        return id;
     }
 }

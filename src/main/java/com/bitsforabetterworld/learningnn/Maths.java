@@ -6,12 +6,21 @@ public class Maths {
     private static final SecureRandom rand = new SecureRandom();
 
     public static double activationFunction(double x) {
-        return Math.tanh(x);
+        return sigmoid(x);
     }
     
-    public static double derivativeActivationFunction(double x) {
+    public static double tanh(double x) {
+        return Math.tanh(x);
+    }
+
+    public static double derivativeTanh(double x) {
         double coshx = Math.cosh(x);
         return 1 / (coshx * coshx);
+
+    }
+
+    public static double derivativeActivationFunction(double x) {
+        return sigmoid(x) * sigmoid(-x);
     }
 
     // Logistic function. Returns a value in the range (0, 1)
