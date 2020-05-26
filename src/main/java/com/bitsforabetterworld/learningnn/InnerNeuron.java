@@ -20,20 +20,21 @@ public class InnerNeuron extends Neuron {
             for (var synapse : synapses) {
                 sum += synapse.getWeightedValue();
             }
-            value = Maths.activationFunction(sum);
+            value = sum;
         }
         return value;
     }
 
     @Override
-    public void updateNeuronWeight(double expected) {
-        double error = expected - value;
-        // Maybe?
-
-        double deltaOutput = error * Maths.derivativeActivationFunction(error);
-        System.out.println("InnerNeuron updating weights: error="+error + " current="+value+ " expected: "+expected + " delta="+deltaOutput);
+    public void updateNeuronWeight(double error) {
+        double totalWeightMagnitude = 0.0;
         for (var synapse : synapses) {
-            synapse.updateWeights(deltaOutput);
+            totalWeightMagnitude += synapse.getWeight();
+        }
+        if (totalWeightMagnitude > 0.0) {
+            for (var synapse : synapses) {
+                synapse.updateWeights(error * synapse.getWeight() / totalWeightMagnitude);
+            }
         }
     }
 

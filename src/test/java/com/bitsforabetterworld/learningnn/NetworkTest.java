@@ -9,16 +9,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NetworkTest {
+
+    @Test
     public void testLearnZero() throws IOException {
         Network network = new Network.Builder().innerLayerCount(0).inputLayerSize(1).outputLayerSize(1)
-                .learningRate(0.2).build();
-        for (double d=-1000.0; d<1000.0; ++d) {
-            network.train(Arrays.asList(d), Arrays.asList(0.0));
-        }
-        network.reset();
-        System.out.println("READY: "+network.toJson());
+                .learningRate(1.0).build();
+        System.out.println("Before training: "+network.toJson());
+        network.train(Arrays.asList(1.0), Arrays.asList(0.0));
+        System.out.println("After training: "+network.toJson());
         List<Double> result = network.evaluate(Arrays.asList(1.5));
-        assertEquals(0.0, result.get(0), 0.01);
+        assertEquals(0.0, result.get(0), 0.001);
     }
 
     public void testXor() {
