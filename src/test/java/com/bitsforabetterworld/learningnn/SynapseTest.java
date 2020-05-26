@@ -41,6 +41,6 @@ public class SynapseTest {
         synapse.updateWeights(0.8);
         double newWeight = synapse.getWeight();
         assertEquals(weight + learningRate * 0.8, newWeight);
-        Mockito.verify(mockNeuron).updateNeuronWeight(Mockito.eq(weight * 0.8));
+        Mockito.verify(mockNeuron).updateNeuronWeight(Mockito.eq(0.8));
     }
 }

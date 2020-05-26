@@ -29,7 +29,7 @@ public class Synapse {
         this.weight += correctionFactor;
         System.out.println("SynapseUpd: err="+error+" currentWeight="+currentWeight+" correctionFactor="+correctionFactor);
         // Pass on currentWeight * error as the errror to my neuron.
-        neuron.updateNeuronWeight(currentWeight * error);
+        neuron.updateNeuronWeight(error);
     }
 
     public void toJson(JsonGenerator gen) throws IOException {

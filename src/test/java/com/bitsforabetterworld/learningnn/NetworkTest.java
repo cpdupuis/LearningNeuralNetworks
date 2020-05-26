@@ -47,6 +47,21 @@ public class NetworkTest {
         assertEquals(-1.5, result.get(0), 0.001);
     }
 
+    @Test
+    public void testLearnZero_OneInnerLayer() throws IOException {
+        System.out.println("STARTSTARTSTART");
+        Network network = new Network.Builder().innerLayerCount(1).innerLayerSize(1).inputLayerSize(1).outputLayerSize(1)
+                .learningRate(0.1).build();
+        System.out.println("Before training: "+network.toJson());
+        for (double d=-8.0; d<32.0; ++d) {
+            network.train(Arrays.asList(d), Arrays.asList(0.0));
+            System.out.println("After training: "+network.toJson());
+        }
+        List<Double> result = network.evaluate(Arrays.asList(1.5));
+        System.out.println("ENDENDEND");
+        assertEquals(0.0, result.get(0), 0.001);
+    }
+
     public void testXor() {
         var network = new Network.Builder().learningRate(0.2).inputLayerSize(2).innerLayerSize(3).outputLayerSize(1)
                 .innerLayerCount(2).build();

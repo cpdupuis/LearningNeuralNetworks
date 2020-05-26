@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OutputLayer extends Layer {
-    private final List<Neuron> neurons;
+    private final List<OutputNeuron> neurons;
 
     public OutputLayer(Network network, Layer previous) {
         int neuronCount =  network.getOutputLayerSize();
@@ -14,13 +14,13 @@ public class OutputLayer extends Layer {
             for (var neuron : previous.getNeurons()) {
                 synapses.add(new Synapse(network.getLearningRate(), neuron));
             }
-            InnerNeuron innerNeuron = new InnerNeuron(synapses, network.createId());
-            neurons.add(innerNeuron);
+            OutputNeuron neuron = new OutputNeuron(synapses, network.createId());
+            neurons.add(neuron);
         }
     }
 
     @Override
-    public List<Neuron> getNeurons() {
+    public List<OutputNeuron> getNeurons() {
         return neurons;
     }
 }

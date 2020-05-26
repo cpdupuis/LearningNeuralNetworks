@@ -8,6 +8,12 @@ public class BiasNeuron extends Neuron {
 
     public BiasNeuron(long id) {
         super(id);
+        value = 1.0;
+    }
+
+    @Override
+    public void reset() {
+        // no-op
     }
 
     @Override
