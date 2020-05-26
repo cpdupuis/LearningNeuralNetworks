@@ -34,6 +34,19 @@ public class NetworkTest {
         assertEquals(1.5, result.get(0), 0.001);
     }
 
+    @Test
+    public void testLearnNegativeX() throws IOException {
+        Network network = new Network.Builder().innerLayerCount(0).innerLayerSize(0).inputLayerSize(1).outputLayerSize(1)
+                .learningRate(0.2).build();
+        System.out.println("Before training: "+network.toJson());
+        for (double d=0; d<8.0; ++d) {
+            network.train(Arrays.asList(d), Arrays.asList(-d));
+        }
+        System.out.println("After training: "+network.toJson());
+        List<Double> result = network.evaluate(Arrays.asList(1.5));
+        assertEquals(-1.5, result.get(0), 0.001);
+    }
+
     public void testXor() {
         var network = new Network.Builder().learningRate(0.2).inputLayerSize(2).innerLayerSize(3).outputLayerSize(1)
                 .innerLayerCount(2).build();
