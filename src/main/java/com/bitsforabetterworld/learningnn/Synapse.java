@@ -23,12 +23,9 @@ public class Synapse {
         return weight;
     }
 
-    public void updateWeights(double error) {
-        double currentWeight = weight;
-        double correctionFactor = learningRate * error;
-        this.weight += correctionFactor;
-        System.out.println("SynapseUpd: err="+error+" currentWeight="+currentWeight+" correctionFactor="+correctionFactor);
-        // Pass on currentWeight * error as the errror to my neuron.
+    public void updateWeights(double error, double predecessorOutput) {
+        // W = w + L * Err * myoutput * parentOutput * (1 - parentOutput)
+        weight = weight + learningRate * error * neuron.getValue() * predecessorOutput * (1 - predecessorOutput);
         neuron.updateNeuronWeight(error);
     }
 

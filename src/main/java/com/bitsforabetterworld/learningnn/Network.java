@@ -88,10 +88,8 @@ public class Network {
     }
 
     // returns chi-squared error
-    public double train(List<Double> input, List<Double> expectedOutput) {
+    public void train(List<Double> input, List<Double> expectedOutput) {
         List<Double> result = evaluate(input);
-        double totalError = 0.0;
-        double chiSquaredError = 0.0;
         if (expectedOutput.size() != result.size()) {
             throw new ValidationException("Mismatch between expectedOutput size and output layer size");
         }
@@ -99,13 +97,8 @@ public class Network {
             // error is the amount that the result needs to be corrected by in order to be
             // correct
             double error = expectedOutput.get(i) - result.get(i);
-            System.out.println("Expected: "+expectedOutput.get(i)+ " Actual: "+result.get(i) + " Error: "+error);;
-            totalError += error;
-            chiSquaredError += (error * error);
             outputLayer.getNeurons().get(i).updateNeuronWeight(error);
         }
-        System.out.println("Error report chi2=" + chiSquaredError + " totalErr=" + totalError);
-        return chiSquaredError;
     }
 
     public List<Double> evaluate(List<Double> input) {

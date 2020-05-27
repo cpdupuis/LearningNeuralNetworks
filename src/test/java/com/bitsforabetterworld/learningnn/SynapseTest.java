@@ -34,13 +34,17 @@ public class SynapseTest {
     @Test
     public void testUpdateWeight() {
         double learningRate = 0.5;
+        double totalError = 0.8;
+        double nextNeuron = 0.6;
+        double prevNeuron = 0.3;
+        double oneMinusPrev = 0.7;
         Synapse synapse = new Synapse(learningRate, mockNeuron);
         double weight = synapse.getWeight();
-        doReturn(0.6).when(mockNeuron).getValue();
-
-        synapse.updateWeights(0.8);
+        doReturn(nextNeuron).when(mockNeuron).getValue();
+        // W = w + L * Err * myoutput * parentOutput * (1 - parentOutput)
+        synapse.updateWeights(totalError, prevNeuron);
         double newWeight = synapse.getWeight();
-        assertEquals(weight + learningRate * 0.8, newWeight);
-        Mockito.verify(mockNeuron).updateNeuronWeight(Mockito.eq(0.8));
+        assertEquals(weight + learningRate * totalError * nextNeuron * prevNeuron * oneMinusPrev, newWeight);
+        Mockito.verify(mockNeuron).updateNeuronWeight(Mockito.eq(totalError));
     }
 }
