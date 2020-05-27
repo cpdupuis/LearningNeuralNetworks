@@ -27,14 +27,15 @@ public class InnerNeuron extends Neuron {
 
     @Override
     public void updateNeuronWeight(double error) {
-        double totalWeightMagnitude = 0.0;
-        for (var synapse : synapses) {
-            totalWeightMagnitude += Math.abs(synapse.getWeight());
+        double totalMagnitude = 0.0;
+        if (error == 0.0) {
+            return;
         }
-        if (totalWeightMagnitude > 0.0) {
-            for (var synapse : synapses) {
-                synapse.updateWeights(error * Math.abs(synapse.getWeight()) / totalWeightMagnitude);
-            }
+        for (var synapse : synapses) {
+            totalMagnitude += 0.5 * synapse.getWeight() *synapse.getWeight();
+        }
+        for (var synapse : synapses) {
+            synapse.updateWeights(error * 0.5 * synapse.getWeight() * synapse.getWeight() / totalMagnitude);
         }
     }
 

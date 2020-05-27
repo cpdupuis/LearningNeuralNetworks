@@ -13,20 +13,21 @@ public class NetworkTest {
     @Test
     public void testLearnZero() throws IOException {
         Network network = new Network.Builder().innerLayerCount(0).inputLayerSize(1).outputLayerSize(1)
-                .learningRate(1.0).build();
+                .learningRate(0.2).build();
         System.out.println("Before training: "+network.toJson());
-        network.train(Arrays.asList(1.0), Arrays.asList(0.0));
-        System.out.println("After training: "+network.toJson());
+        for (double d = 0.0; d < 32.0; ++d) {
+            network.train(Arrays.asList(d), Arrays.asList(0.0));
+            System.out.println("After training: "+network.toJson());
+        }
         List<Double> result = network.evaluate(Arrays.asList(1.5));
         assertEquals(0.0, result.get(0), 0.001);
     }
 
-    @Test
     public void testLearnX() throws IOException {
         Network network = new Network.Builder().innerLayerCount(0).innerLayerSize(0).inputLayerSize(1).outputLayerSize(1)
                 .learningRate(0.2).build();
         System.out.println("Before training: "+network.toJson());
-        for (double d=0; d<8.0; ++d) {
+        for (double d=0; d<32.0; ++d) {
             network.train(Arrays.asList(d), Arrays.asList(d));
         }
         System.out.println("After training: "+network.toJson());
@@ -34,7 +35,6 @@ public class NetworkTest {
         assertEquals(1.5, result.get(0), 0.001);
     }
 
-    @Test
     public void testLearnNegativeX() throws IOException {
         Network network = new Network.Builder().innerLayerCount(0).innerLayerSize(0).inputLayerSize(1).outputLayerSize(1)
                 .learningRate(0.2).build();
@@ -47,7 +47,6 @@ public class NetworkTest {
         assertEquals(-1.5, result.get(0), 0.001);
     }
 
-    @Test
     public void testLearnZero_OneInnerLayer() throws IOException {
         System.out.println("STARTSTARTSTART");
         Network network = new Network.Builder().innerLayerCount(1).innerLayerSize(1).inputLayerSize(1).outputLayerSize(1)
