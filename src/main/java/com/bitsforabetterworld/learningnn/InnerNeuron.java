@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 
-// Linear Threshold Unit. See this page https://medium.com/@srajaninnov/introduction-to-neural-networks-11b009f1a97b
 public class InnerNeuron extends Neuron {
     private final Iterable<Synapse> synapses;
 
