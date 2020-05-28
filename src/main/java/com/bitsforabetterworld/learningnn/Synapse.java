@@ -24,8 +24,10 @@ public class Synapse {
     }
 
     public void updateWeights(double error, double predecessorOutput) {
-        /* This is the core of backpropagation. This code is based on info from this source: https://www.nnwj.de/backpropagation.html
-        *   The most important bit from there:
+        /* 
+This is the core of backpropagation. This code is based on info from this source: https://www.nnwj.de/backpropagation.html
+The most important bit from there:
+
 The formula of sigmoid activation is:
 
                1
