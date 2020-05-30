@@ -19,7 +19,7 @@ public class InnerNeuron extends Neuron {
             for (var synapse : synapses) {
                 sum += synapse.getWeightedValue();
             }
-            value = Maths.sigmoid(sum);
+            value = Maths.activationFunction(sum);
         }
         return value;
     }

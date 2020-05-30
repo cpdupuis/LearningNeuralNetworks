@@ -54,7 +54,7 @@ The algorithm works as follows:
         */
 
         // W = w + L * Err * myoutput * parentOutput * (1 - parentOutput)
-        weight = weight + learningRate * error * neuron.getValue() * predecessorOutput * (1 - predecessorOutput);
+        weight = weight + learningRate * error * neuron.getValue() * Maths.derivativeActivationFunction(predecessorOutput);
         neuron.updateNeuronWeight(error);
     }
 

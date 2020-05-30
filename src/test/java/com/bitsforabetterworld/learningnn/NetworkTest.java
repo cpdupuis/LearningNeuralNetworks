@@ -14,12 +14,10 @@ public class NetworkTest {
     public void testLearnZero() throws IOException {
         Network network = new Network.Builder().innerLayerCount(0).inputLayerSize(1).outputLayerSize(1)
                 .learningRate(0.2).build();
-        System.out.println("Before training: " + network.toJson());
         for (int i = 0; i < 100000; ++i) {
             double d = Maths.boundedRandom(0.0, 1.0);
             network.train(Arrays.asList(d), Arrays.asList(0.0));
         }
-        System.out.println("After training: " + network.toJson());
 
         List<Double> result = network.evaluate(Arrays.asList(0.5));
         assertEquals(0.0, result.get(0), 0.01);
@@ -33,12 +31,10 @@ public class NetworkTest {
     public void testLearnX() throws IOException {
         Network network = new Network.Builder().innerLayerCount(0).inputLayerSize(1).outputLayerSize(1)
                 .learningRate(0.2).build();
-        System.out.println("Before training: " + network.toJson());
         for (int i = 0; i < 100000; ++i) {
             double d = Maths.boundedRandom(0.0, 1.0);
             network.train(Arrays.asList(d), Arrays.asList(d));
         }
-        System.out.println("After training: " + network.toJson());
 
         List<Double> result = network.evaluate(Arrays.asList(0.5));
         assertEquals(0.5, result.get(0), 0.01);
@@ -52,12 +48,10 @@ public class NetworkTest {
     public void testLearnOneMinusX() throws IOException {
         Network network = new Network.Builder().innerLayerCount(0).inputLayerSize(1).outputLayerSize(1)
                 .learningRate(0.2).build();
-        System.out.println("Before training: " + network.toJson());
         for (int i = 0; i < 100000; ++i) {
             double d = Maths.boundedRandom(0.0, 1.0);
             network.train(Arrays.asList(d), Arrays.asList(1.0 - d));
         }
-        System.out.println("After training: " + network.toJson());
 
         List<Double> result = network.evaluate(Arrays.asList(0.5));
         assertEquals(0.5, result.get(0), 0.01);
@@ -71,12 +65,10 @@ public class NetworkTest {
     public void testLearnZero_OneInnerLayer() throws IOException {
         Network network = new Network.Builder().innerLayerCount(1).innerLayerSize(1).inputLayerSize(1).outputLayerSize(1)
                 .learningRate(0.2).build();
-        System.out.println("Before training: " + network.toJson());
         for (int i = 0; i < 50000; ++i) {
             double d = Maths.boundedRandom(0.0, 1.0);
             network.train(Arrays.asList(d), Arrays.asList(0.0));
         }
-        System.out.println("After training: " + network.toJson());
 
         List<Double> result = network.evaluate(Arrays.asList(0.5));
         assertEquals(0.0, result.get(0), 0.01);
